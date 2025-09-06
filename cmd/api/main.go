@@ -28,4 +28,6 @@ func main() {
 
 	r := gin.Default()
 
+	routes.RegisterRoutes(r, userRoutes)
+
 }
