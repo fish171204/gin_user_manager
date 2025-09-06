@@ -30,4 +30,8 @@ func main() {
 
 	routes.RegisterRoutes(r, userRoutes)
 
+	if err := r.Run(cfg.ServerAddress); err != nil {
+		panic(err)
+	}
+
 }
