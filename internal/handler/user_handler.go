@@ -11,3 +11,7 @@ func NewUserHandler(service *service.UserService) *UserHandler {
 		service: service,
 	}
 }
+
+func (uh *UserHandler) GetAllUsers() {
+
+}
