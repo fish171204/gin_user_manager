@@ -51,7 +51,7 @@ func getModuleRoutes(modules []Module) []routes.Route {
 }
 
 func loadEnv() {
-	err := godotenv.Load("../../.env")
+	err := godotenv.Load(".env")
 	if err != nil {
 		log.Println("No .env file found")
 	}
