@@ -1,7 +1,8 @@
-client --> routes --> handler --> service --> repositcky --> model
+lifecycle: client --> routes --> handler --> service --> repositcky --> model
 
-user (model)
-repo = user_repository(user)
-service user_service(repo)
-handler = user_handler(service)
-routes = user_routes(handler)
+init : 
+        1. user (model)
+        2. repo = user_repository(user)
+        3. service user_service(repo)
+        4. handler = user_handler(service)
+        5. routes = user_routes(handler)
