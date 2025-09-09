@@ -2,6 +2,7 @@ package service
 
 import (
 	"log"
+	"user-management-api/internal/models"
 	"user-management-api/internal/repository"
 )
 
@@ -21,7 +22,7 @@ func (us *userService) GetAllUsers() {
 	log.Println("GetAllUsers into userService")
 }
 
-func (us *userService) CreateUsers() {
+func (us *userService) CreateUsers(user models.User) {
 
 }
 

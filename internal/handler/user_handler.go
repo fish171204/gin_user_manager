@@ -29,6 +29,7 @@ func (uh *UserHandler) CreateUsers(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, validation.HandleValidationErrors(err))
 	}
 
+	uh.service.CreateUsers(user)
 }
 
 func (uh *UserHandler) GetUserByUUID(ctx *gin.Context) {
