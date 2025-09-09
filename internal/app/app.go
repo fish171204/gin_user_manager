@@ -1,10 +1,12 @@
 package app
 
 import (
+	"log"
 	"user-management-api/internal/config"
 	"user-management-api/internal/routes"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 type Module interface {
@@ -42,4 +44,11 @@ func getModuleRoutes(modules []Module) []routes.Route {
 	}
 
 	return routeList
+}
+
+func loadEnv() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("No .env file found")
+	}
 }
