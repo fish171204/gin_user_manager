@@ -59,7 +59,7 @@ func CleanupClients() {
 	}
 }
 
-// hey -n 20 -c 1 -H "X-API-Key:(trong .env)" http://localhost:8080/api/v1/categories/golang
+// hey -n 20 -c 1 -H "X-API-Key:(trong .env)" http://localhost:8080/api/v1/users
 func RateLimiterMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		ip := getClientIP(ctx)
