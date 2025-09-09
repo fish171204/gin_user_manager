@@ -1,9 +1,9 @@
 package service
 
 import (
-	"log"
 	"user-management-api/internal/models"
 	"user-management-api/internal/repository"
+	"user-management-api/internal/utils"
 )
 
 type userService struct {
@@ -17,13 +17,11 @@ func NewUserService(repo repository.UserRepository) UserService {
 }
 
 func (us *userService) GetAllUsers() {
-	us.repo.FindAll()
 
-	log.Println("GetAllUsers into userService")
 }
 
 func (us *userService) CreateUsers(user models.User) {
-
+	user.Email = utils.NormalizeString(user.Email)
 }
 
 func (us *userService) GetUserByUUID() {
