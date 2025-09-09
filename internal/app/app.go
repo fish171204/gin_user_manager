@@ -4,6 +4,7 @@ import (
 	"log"
 	"user-management-api/internal/config"
 	"user-management-api/internal/routes"
+	"user-management-api/internal/validation"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -20,9 +21,12 @@ type Application struct {
 }
 
 func NewApplication(cfg *config.Config) *Application {
-	r := gin.Default()
+
+	validation.InitValidator()
 
 	loadEnv()
+
+	r := gin.Default()
 
 	modules := []Module{
 		NewUserModule(),
