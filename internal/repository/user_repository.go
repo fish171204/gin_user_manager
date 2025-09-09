@@ -34,3 +34,12 @@ func (ur *InMemoryUserRepository) Update() {
 func (ur *InMemoryUserRepository) Delete() {
 
 }
+func (ur *InMemoryUserRepository) FindByEmail(email string) (models.User, bool) {
+	for _, user := range ur.users {
+		if user.Email == email {
+			return user, true
+		}
+	}
+
+	return models.User{}, false
+}

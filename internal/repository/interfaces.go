@@ -6,4 +6,5 @@ type UserRepository interface {
 	FindByUUID()
 	Update()
 	Delete()
+	FindByEmail(email string)
 }
