@@ -28,6 +28,7 @@ func (uh *UserHandler) CreateUsers(ctx *gin.Context) {
 	var user models.User
 	if err := ctx.ShouldBindJSON(&user); err != nil {
 		ctx.JSON(http.StatusBadRequest, validation.HandleValidationErrors(err))
+		return
 	}
 
 	createdUser, err := uh.service.CreateUsers(user)
