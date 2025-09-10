@@ -38,6 +38,8 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 	}
 
 	user.Password = string(hashedPassword)
+
+	us.repo.Create(user)
 }
 
 func (us *userService) GetUserByUUID() {

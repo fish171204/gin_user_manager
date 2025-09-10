@@ -4,7 +4,7 @@ import "user-management-api/internal/models"
 
 type UserRepository interface {
 	FindAll()
-	Create()
+	Create(user models.User) error
 	FindByUUID()
 	Update()
 	Delete()
