@@ -67,6 +67,7 @@ func ResponseSuccess(ctx *gin.Context, status int, data any) {
 		"status": "success",
 		"data":   data,
 	})
+	return
 }
 
 func httpStatusFromCode(code ErrorCode) int {
