@@ -34,12 +34,17 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return models.User{}, utils.WrapError("failed to create user", utils.ErrCodeInternal, err)
+		return models.User{}, utils.WrapError("failed to hash password", utils.ErrCodeInternal, err)
 	}
 
 	user.Password = string(hashedPassword)
 
-	us.repo.Create(user)
+	if err := us.repo.Create(user); err != nil {
+		return models.User{}, utils.WrapError("failed to create password", utils.ErrCodeInternal, err)
+	}
+
+	return user, nil
+
 }
 
 func (us *userService) GetUserByUUID() {
