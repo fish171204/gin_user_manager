@@ -19,7 +19,7 @@ func (ur *InMemoryUserRepository) FindAll() {
 	log.Println("GetAllUsers into UserRepository")
 }
 
-func (ur *InMemoryUserRepository) Create(user models.User) {
+func (ur *InMemoryUserRepository) Create(user models.User) error {
 	ur.users = append(ur.users, user)
 	return nil
 }
