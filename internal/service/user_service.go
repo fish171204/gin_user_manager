@@ -4,6 +4,9 @@ import (
 	"user-management-api/internal/models"
 	"user-management-api/internal/repository"
 	"user-management-api/internal/utils"
+
+	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type userService struct {
@@ -26,6 +29,10 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 	if _, exists := us.repo.FindByEmail(user.Email); exists {
 		return models.User{}, utils.NewError("email already exitst", utils.ErrCodeConflict)
 	}
+
+	user.UUID = uuid.New().String()
+
+	bcrypt.GenerateFromPassword([]byte(user.Password))
 }
 
 func (us *userService) GetUserByUUID() {
