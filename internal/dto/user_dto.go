@@ -17,6 +17,29 @@ func MapUserToDTO(user models.User) *UserDTO {
 		Name:   user.Name,
 		Email:  user.Email,
 		Age:    user.Age,
-		Status: user.Status,
+		Status: mapStatusText(user.Status),
+		Level:  mapLevelText(user.Level),
+	}
+}
+
+func mapStatusText(status int) string {
+	switch status {
+	case 1:
+		return "Show"
+	case 2:
+		return "Hide"
+	default:
+		return "None"
+	}
+}
+
+func mapLevelText(status int) string {
+	switch status {
+	case 1:
+		return "Admin"
+	case 2:
+		return "Member"
+	default:
+		return "None"
 	}
 }
