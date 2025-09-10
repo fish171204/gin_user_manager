@@ -1,5 +1,9 @@
 package utils
 
+import (
+	"net/http"
+)
+
 type ErrorCode string
 
 const (
@@ -31,5 +35,18 @@ func WrapError(message string, code ErrorCode, err error) error {
 		Message: message,
 		Code:    code,
 		Err:     err,
+	}
+}
+
+func httpStatusFromCode(code ErrorCode) int {
+	switch code {
+	case ErrCodeBadeRequest:
+		return http.StatusBadRequest
+	case ErrCodeNotFound:
+		return http.StatusNotFound
+	case ErrCodeConflict:
+		return http.StatusConflict
+	default:
+		return http.StatusInternalServerError
 	}
 }
