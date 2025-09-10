@@ -32,7 +32,12 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 
 	user.UUID = uuid.New().String()
 
-	bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return models.User{}, utils.WrapError("failed to create user", utils.ErrCodeInternal, err)
+	}
+
+	user.Password = string(hashedPassword)
 }
 
 func (us *userService) GetUserByUUID() {
