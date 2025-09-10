@@ -62,6 +62,13 @@ func ResponseError(ctx *gin.Context, err error) {
 	})
 }
 
+func ResponseSuccess(ctx *gin.Context, status int, data any) {
+	ctx.JSON(status, gin.H{
+		"status": "success",
+		"data":   data,
+	})
+}
+
 func httpStatusFromCode(code ErrorCode) int {
 	switch code {
 	case ErrCodeBadeRequest:
