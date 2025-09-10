@@ -10,6 +10,21 @@ import (
 )
 
 func RegisterCustomValidation(v *validator.Validate) {
+	v.RegisterValidation("password_strong", func(fl validator.FieldLevel) bool {
+		password := fl.Field().String()
+
+		if len(password) < 8 {
+			return false
+		}
+
+		hasLower := regexp.MustCompile(`[a-z]`).MatchString(password)
+		hasUpper := regexp.MustCompile(`[A-z]`).MatchString(password)
+		hasDigit := regexp.MustCompile(`[0-9]`).MatchString(password)
+		hasSpecial := regexp.MustCompile(`[!@#$%^&*]`).MatchString(password)
+
+		return hasLower && hasUpper && hasDigit && hasSpecial
+	})
+
 	var slugRegex = regexp.MustCompile(`^[a-z0-9]+(?:[-.][a-z0-9]+)*$`)
 	v.RegisterValidation("slug", func(fl validator.FieldLevel) bool {
 		return slugRegex.MatchString(fl.Field().String())
