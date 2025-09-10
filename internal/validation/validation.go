@@ -76,6 +76,8 @@ func HandleValidationErrors(err error) gin.H {
 				errors[e.Field()] = e.Field() + " phải đúng định dạng email"
 			case "datetime":
 				errors[e.Field()] = e.Field() + " phải theo đúng định dạng YYYY-MM-DD"
+			case "password_strong":
+				errors[e.Field()] = e.Field() + " phải ít nhất 8 ký tự bao gồm (chữ thường, chữ in hoa, số và ký tự đặc biệt)"
 			case "file_ext":
 				allowedValue := strings.Join(strings.Split(e.Param(), " "), ",")
 				errors[e.Field()] = fmt.Sprintf("%s chỉ cho phép những file có extension: %s", e.Field(), allowedValue)

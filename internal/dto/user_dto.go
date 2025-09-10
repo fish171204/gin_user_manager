@@ -2,6 +2,7 @@ package dto
 
 import "user-management-api/internal/models"
 
+// Data Transfer Object (DTO): chuyển dữ liệu ra response
 type UserDTO struct {
 	UUID   string `json:"uuid"`
 	Name   string `json:"full_name"`
