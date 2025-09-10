@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"user-management-api/internal/dto"
 	"user-management-api/internal/models"
 	"user-management-api/internal/service"
 	"user-management-api/internal/utils"
@@ -37,7 +38,9 @@ func (uh *UserHandler) CreateUsers(ctx *gin.Context) {
 		return
 	}
 
-	utils.ResponseSuccess(ctx, http.StatusCreated, createdUser)
+	userDTO := dto.MapUserToDTO(createdUser)
+
+	utils.ResponseSuccess(ctx, http.StatusCreated, &userDTO)
 }
 
 func (uh *UserHandler) GetUserByUUID(ctx *gin.Context) {
