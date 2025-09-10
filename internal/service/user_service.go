@@ -32,7 +32,7 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 
 	user.UUID = uuid.New().String()
 
-	bcrypt.GenerateFromPassword([]byte(user.Password))
+	bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 }
 
 func (us *userService) GetUserByUUID() {
