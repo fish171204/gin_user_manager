@@ -98,6 +98,11 @@ func (us *userService) UpdateUser(uuid string, updatedUser models.User) (models.
 		return models.User{}, utils.NewError("email already exitst", utils.ErrCodeConflict)
 	}
 
+	currentUser, found := us.repo.FindByUUID(uuid)
+	if !found {
+		return models.User{}, utils.NewError("user not found", utils.ErrCodeNotFound)
+	}
+
 }
 
 func (us *userService) DeleteUser() {
