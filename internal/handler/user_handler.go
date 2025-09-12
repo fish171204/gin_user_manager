@@ -107,6 +107,8 @@ func (uh *UserHandler) UpdateUser(ctx *gin.Context) {
 		utils.ResponseValidator(ctx, validation.HandleValidationErrors(err))
 		return
 	}
+
+	uh.service.UpdateUser(param.Uuid, user)
 }
 
 func (uh *UserHandler) DeleteUser(ctx *gin.Context) {
