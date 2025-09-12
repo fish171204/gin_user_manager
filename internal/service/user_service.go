@@ -1,6 +1,7 @@
 package service
 
 import (
+	"strings"
 	"user-management-api/internal/models"
 	"user-management-api/internal/repository"
 	"user-management-api/internal/utils"
@@ -25,7 +26,21 @@ func (us *userService) GetAllUsers(search string, page, limit int) ([]models.Use
 		return nil, utils.WrapError("failed to fetch users", utils.ErrCodeInternal, err)
 	}
 
-	return users, nil
+	var filteredUsers []models.User
+	// Search
+	if search != "" {
+		search = strings.ToLower(search)
+		for _, user := range users {
+			name := strings.ToLower(user.Name)
+			email := strings.ToLower(user.Email)
+
+			if strings.Contains(name, search) || strings.Contains(email, search) {
+				filteredUsers = append(filteredUsers, user)
+			}
+		}
+	}
+
+	return filteredUsers, nil
 }
 
 func (us *userService) CreateUsers(user models.User) (models.User, error) {
