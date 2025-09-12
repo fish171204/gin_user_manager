@@ -4,9 +4,9 @@ import "user-management-api/internal/models"
 
 type UserRepository interface {
 	FindAll() ([]models.User, error)
-	Create(user models.User) error
 	FindByUUID(uuid string) (models.User, bool)
-	Update()
-	Delete()
 	FindByEmail(email string) (models.User, bool)
+	Create(user models.User) error
+	Update(uuid string, user models.User) error
+	Delete()
 }
