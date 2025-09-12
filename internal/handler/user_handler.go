@@ -24,7 +24,7 @@ func NewUserHandler(service service.UserService) *UserHandler {
 func (uh *UserHandler) GetAllUsers(ctx *gin.Context) {
 	users, err := uh.service.GetAllUsers()
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, validation.HandleValidationErrors(err))
+		utils.ResponseError(ctx, err)
 		return
 	}
 
@@ -49,10 +49,6 @@ func (uh *UserHandler) CreateUsers(ctx *gin.Context) {
 	userDTO := dto.MapUserToDTO(createdUser)
 
 	utils.ResponseSuccess(ctx, http.StatusCreated, &userDTO)
-}
-
-func (uh *UserHandler) GetUserByUUID(ctx *gin.Context) {
-
 }
 
 func (uh *UserHandler) UpdateUser(ctx *gin.Context) {
