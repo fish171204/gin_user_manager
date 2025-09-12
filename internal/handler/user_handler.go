@@ -22,7 +22,15 @@ func NewUserHandler(service service.UserService) *UserHandler {
 }
 
 func (uh *UserHandler) GetAllUsers(ctx *gin.Context) {
+	users, err := uh.service.GetAllUsers()
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, validation.HandleValidationErrors(err))
+		return
+	}
 
+	userDTO := dto.MapUsersToDTO(users)
+
+	utils.ResponseSuccess(ctx, http.StatusOK, userDTO)
 }
 
 func (uh *UserHandler) CreateUsers(ctx *gin.Context) {
