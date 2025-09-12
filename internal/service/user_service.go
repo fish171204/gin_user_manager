@@ -38,6 +38,9 @@ func (us *userService) GetAllUsers(search string, page, limit int) ([]models.Use
 				filteredUsers = append(filteredUsers, user)
 			}
 		}
+	} else {
+		// No search results
+		filteredUsers = users
 	}
 
 	return filteredUsers, nil
