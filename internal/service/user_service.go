@@ -118,8 +118,11 @@ func (us *userService) UpdateUser(uuid string, updatedUser models.User) (models.
 		currentUser.Password = string(hashedPassword)
 	}
 
-	us.repo.Update(uuid, currentUser)
+	if err := us.repo.Update(uuid, currentUser); err != nil {
+		return models.User{}, utils.WrapError("failed to update user", utils.ErrCodeInternal, err)
+	}
 
+	return currentUser, nil
 }
 
 func (us *userService) DeleteUser() {
