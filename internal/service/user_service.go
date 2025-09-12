@@ -28,7 +28,17 @@ func (us *userService) GetAllUsers(search string, page, limit int) ([]models.Use
 
 	var filteredUsers []models.User
 	// Search
-	 else {
+	if search != "" {
+		search = strings.ToLower(search)
+		for _, user := range users {
+			name := strings.ToLower(user.Name)
+			email := strings.ToLower(user.Email)
+
+			if strings.Contains(name, search) || strings.Contains(email, search) {
+				filteredUsers = append(filteredUsers, user)
+			}
+		}
+	} else {
 		// No search results
 		filteredUsers = users
 	}
