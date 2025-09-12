@@ -32,6 +32,12 @@ func NewUserHandler(service service.UserService) *UserHandler {
 }
 
 func (uh *UserHandler) GetAllUsers(ctx *gin.Context) {
+	var params GetUsersParam
+	if err := ctx.ShouldBindQuery(&params); err != nil {
+		utils.ResponseValidator(ctx, validation.HandleValidationErrors(err))
+		return
+	}
+
 	users, err := uh.service.GetAllUsers()
 	if err != nil {
 		utils.ResponseError(ctx, err)
