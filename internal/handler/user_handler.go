@@ -75,6 +75,7 @@ func (uh *UserHandler) GetUserByUUID(ctx *gin.Context) {
 	utils.ResponseSuccess(ctx, http.StatusOK, &userDTO)
 }
 
+// POST
 func (uh *UserHandler) CreateUsers(ctx *gin.Context) {
 	var user models.User
 	if err := ctx.ShouldBindJSON(&user); err != nil {
@@ -93,9 +94,16 @@ func (uh *UserHandler) CreateUsers(ctx *gin.Context) {
 	utils.ResponseSuccess(ctx, http.StatusCreated, &userDTO)
 }
 
+// PUT
 func (uh *UserHandler) UpdateUser(ctx *gin.Context) {
 	var param GetUserByUuidParam
 	if err := ctx.ShouldBindUri(&param); err != nil {
+		utils.ResponseValidator(ctx, validation.HandleValidationErrors(err))
+		return
+	}
+
+	var user models.User
+	if err := ctx.ShouldBindJSON(&user); err != nil {
 		utils.ResponseValidator(ctx, validation.HandleValidationErrors(err))
 		return
 	}
