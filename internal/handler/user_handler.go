@@ -94,7 +94,11 @@ func (uh *UserHandler) CreateUsers(ctx *gin.Context) {
 }
 
 func (uh *UserHandler) UpdateUser(ctx *gin.Context) {
-
+	var param GetUserByUuidParam
+	if err := ctx.ShouldBindUri(&param); err != nil {
+		utils.ResponseValidator(ctx, validation.HandleValidationErrors(err))
+		return
+	}
 }
 
 func (uh *UserHandler) DeleteUser(ctx *gin.Context) {
