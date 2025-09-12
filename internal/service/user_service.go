@@ -53,7 +53,7 @@ func (us *userService) GetAllUsers(search string, page, limit int) ([]models.Use
 		end = len(filteredUsers)
 	}
 
-	return filteredUsers, nil
+	return filteredUsers[start:end], nil
 }
 
 func (us *userService) CreateUsers(user models.User) (models.User, error) {
