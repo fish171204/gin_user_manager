@@ -103,6 +103,12 @@ func (us *userService) UpdateUser(uuid string, updatedUser models.User) (models.
 		return models.User{}, utils.NewError("user not found", utils.ErrCodeNotFound)
 	}
 
+	currentUser.Name = updatedUser.Name
+	currentUser.Email = updatedUser.Email
+	currentUser.Age = updatedUser.Age
+	currentUser.Status = updatedUser.Status
+	currentUser.Level = updatedUser.Level
+
 }
 
 func (us *userService) DeleteUser() {
