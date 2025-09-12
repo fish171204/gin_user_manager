@@ -52,8 +52,8 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 
 }
 
-func (us *userService) GetUserByUUID() {
-
+func (us *userService) GetUserByUUID(uuid string) (models.User, error) {
+	us.repo.FindByUUID(uuid)
 }
 
 func (us *userService) UpdateUser() {
