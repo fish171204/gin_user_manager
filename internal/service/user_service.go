@@ -91,12 +91,13 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 }
 
 // PUT
-func (us *userService) UpdateUser(uuid string, user models.User) (models.User, error) {
-	user.Email = utils.NormalizeString(user.Email)
+func (us *userService) UpdateUser(uuid string, updatedUser models.User) (models.User, error) {
+	updatedUser.Email = utils.NormalizeString(updatedUser.Email)
 
-	if _, exists := us.repo.FindByEmail(user.Email); exists {
+	if _, exists := us.repo.FindByEmail(updatedUser.Email); exists {
 		return models.User{}, utils.NewError("email already exitst", utils.ErrCodeConflict)
 	}
+
 }
 
 func (us *userService) DeleteUser() {
