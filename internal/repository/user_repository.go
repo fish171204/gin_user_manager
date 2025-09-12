@@ -23,8 +23,14 @@ func (ur *InMemoryUserRepository) Create(user models.User) error {
 	return nil
 }
 
-func (ur *InMemoryUserRepository) FindByUUID() {
+func (ur *InMemoryUserRepository) FindByUUID(uuid string) (models.User, bool) {
+	for _, user := range ur.users {
+		if user.UUID == uuid {
+			return user, true
+		}
+	}
 
+	return models.User{}, false
 }
 
 func (ur *InMemoryUserRepository) Update() {
