@@ -49,6 +49,10 @@ func (us *userService) GetAllUsers(search string, page, limit int) ([]models.Use
 	}
 
 	end := start + limit
+	if end > len(filteredUsers) {
+		end = len(filteredUsers)
+	}
+
 	return filteredUsers, nil
 }
 
