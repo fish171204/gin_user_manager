@@ -19,7 +19,7 @@ func NewUserService(repo repository.UserRepository) UserService {
 	}
 }
 
-func (us *userService) GetAllUsers() ([]models.User, error) {
+func (us *userService) GetAllUsers(search string, page, limit int) ([]models.User, error) {
 	users, err := us.repo.FindAll()
 	if err != nil {
 		return nil, utils.WrapError("failed to fetch users", utils.ErrCodeInternal, err)

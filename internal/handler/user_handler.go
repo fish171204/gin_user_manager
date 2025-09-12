@@ -46,7 +46,7 @@ func (uh *UserHandler) GetAllUsers(ctx *gin.Context) {
 		params.Limit = 10
 	}
 
-	users, err := uh.service.GetAllUsers()
+	users, err := uh.service.GetAllUsers(params.Search, params.Page, params.Limit)
 	if err != nil {
 		utils.ResponseError(ctx, err)
 		return
