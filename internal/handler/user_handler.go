@@ -59,9 +59,18 @@ func (uh *UserHandler) GetUserByUUID(ctx *gin.Context) {
 	var param GetUserByUuidParam
 	if err := ctx.ShouldBindUri(&param); err != nil {
 		ctx.JSON(http.StatusBadRequest, validation.HandleValidationErrors(err))
+		return
 	}
 
-	uh.service.GetUserByUUID(param.Uuid)
+	user, err := uh.service.GetUserByUUID(param.Uuid)
+	if err != nil {
+		utils.ResponseError(ctx, err)
+		return
+	}
+
+	userDTO := dto.MapUserToDTO(user)
+
+	utils.ResponseSuccess(ctx, http.StatusOK, &userDTO)
 }
 
 func (uh *UserHandler) UpdateUser(ctx *gin.Context) {

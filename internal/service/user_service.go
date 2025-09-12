@@ -53,7 +53,12 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 }
 
 func (us *userService) GetUserByUUID(uuid string) (models.User, error) {
-	us.repo.FindByUUID(uuid)
+	user, found := us.repo.FindByUUID(uuid)
+	if !found {
+		return models.User{}, utils.NewError("user not found", utils.ErrCodeNotFound)
+	}
+
+	return user, nil
 }
 
 func (us *userService) UpdateUser() {
