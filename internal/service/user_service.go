@@ -118,6 +118,8 @@ func (us *userService) UpdateUser(uuid string, updatedUser models.User) (models.
 		currentUser.Password = string(hashedPassword)
 	}
 
+	us.repo.Update(uuid, currentUser)
+
 }
 
 func (us *userService) DeleteUser() {
