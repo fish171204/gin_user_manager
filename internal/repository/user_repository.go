@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"log"
 	"user-management-api/internal/models"
 )
 
@@ -15,8 +14,8 @@ func NewInMemoryUserRepository() UserRepository {
 	}
 }
 
-func (ur *InMemoryUserRepository) FindAll() {
-	log.Println("GetAllUsers into UserRepository")
+func (ur *InMemoryUserRepository) FindAll() ([]models.User, error) {
+	return ur.users, nil
 }
 
 func (ur *InMemoryUserRepository) Create(user models.User) error {
