@@ -109,6 +109,15 @@ func (us *userService) UpdateUser(uuid string, updatedUser models.User) (models.
 	currentUser.Status = updatedUser.Status
 	currentUser.Level = updatedUser.Level
 
+	if updatedUser.Password != "" {
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(updatedUser.Password), bcrypt.DefaultCost)
+		if err != nil {
+			return models.User{}, utils.WrapError("failed to hash password", utils.ErrCodeInternal, err)
+		}
+
+		currentUser.Password = string(hashedPassword)
+	}
+
 }
 
 func (us *userService) DeleteUser() {
