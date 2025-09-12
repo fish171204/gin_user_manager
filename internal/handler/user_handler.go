@@ -108,7 +108,16 @@ func (uh *UserHandler) UpdateUser(ctx *gin.Context) {
 		return
 	}
 
-	uh.service.UpdateUser(param.Uuid, user)
+	updatedUser, err := uh.service.UpdateUser(param.Uuid, user)
+	if err != nil {
+		utils.ResponseError(ctx, err)
+		return
+	}
+
+	userDTO := dto.MapUserToDTO(updatedUser)
+
+	utils.ResponseSuccess(ctx, http.StatusOK, &userDTO)
+
 }
 
 func (uh *UserHandler) DeleteUser(ctx *gin.Context) {
