@@ -15,13 +15,9 @@ func NewInMemoryUserRepository() UserRepository {
 	}
 }
 
+// GET
 func (ur *InMemoryUserRepository) FindAll() ([]models.User, error) {
 	return ur.users, nil
-}
-
-func (ur *InMemoryUserRepository) Create(user models.User) error {
-	ur.users = append(ur.users, user)
-	return nil
 }
 
 func (ur *InMemoryUserRepository) FindByUUID(uuid string) (models.User, bool) {
@@ -34,6 +30,23 @@ func (ur *InMemoryUserRepository) FindByUUID(uuid string) (models.User, bool) {
 	return models.User{}, false
 }
 
+func (ur *InMemoryUserRepository) FindByEmail(email string) (models.User, bool) {
+	for _, user := range ur.users {
+		if user.Email == email {
+			return user, true
+		}
+	}
+
+	return models.User{}, false
+}
+
+// POST
+func (ur *InMemoryUserRepository) Create(user models.User) error {
+	ur.users = append(ur.users, user)
+	return nil
+}
+
+// PUT
 func (ur *InMemoryUserRepository) Update(uuid string, user models.User) error {
 	for i, u := range ur.users {
 		if u.UUID == uuid {
@@ -45,15 +58,7 @@ func (ur *InMemoryUserRepository) Update(uuid string, user models.User) error {
 	return fmt.Errorf("user not found")
 }
 
+// DELETE
 func (ur *InMemoryUserRepository) Delete() {
 
-}
-func (ur *InMemoryUserRepository) FindByEmail(email string) (models.User, bool) {
-	for _, user := range ur.users {
-		if user.Email == email {
-			return user, true
-		}
-	}
-
-	return models.User{}, false
 }
