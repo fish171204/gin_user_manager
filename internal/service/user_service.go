@@ -56,6 +56,16 @@ func (us *userService) GetAllUsers(search string, page, limit int) ([]models.Use
 	return filteredUsers[start:end], nil
 }
 
+func (us *userService) GetUserByUUID(uuid string) (models.User, error) {
+	user, found := us.repo.FindByUUID(uuid)
+	if !found {
+		return models.User{}, utils.NewError("user not found", utils.ErrCodeNotFound)
+	}
+
+	return user, nil
+}
+
+// POST
 func (us *userService) CreateUsers(user models.User) (models.User, error) {
 	user.Email = utils.NormalizeString(user.Email)
 
@@ -80,16 +90,8 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 
 }
 
-func (us *userService) GetUserByUUID(uuid string) (models.User, error) {
-	user, found := us.repo.FindByUUID(uuid)
-	if !found {
-		return models.User{}, utils.NewError("user not found", utils.ErrCodeNotFound)
-	}
-
-	return user, nil
-}
-
-func (us *userService) UpdateUser() {
+// PUT
+func (us *userService) UpdateUser(uuid string, user models.User) (models.User, error) {
 
 }
 
