@@ -41,6 +41,17 @@ func (input *CreateUserInput) MapCreateInputToModel() models.User {
 	}
 }
 
+func (input *UpdateUserInput) MapUpdateInputToModel() models.User {
+	return models.User{
+		Name:     input.Name,
+		Email:    input.Email,
+		Age:      input.Age,
+		Password: input.Password,
+		Status:   input.Status,
+		Level:    input.Level,
+	}
+}
+
 func MapUserToDTO(user models.User) *UserDTO {
 	return &UserDTO{
 		UUID:   user.UUID,
