@@ -130,4 +130,5 @@ func (uh *UserHandler) DeleteUser(ctx *gin.Context) {
 		return
 	}
 
+	uh.service.DeleteUser(params.Uuid)
 }
