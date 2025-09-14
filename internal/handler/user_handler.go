@@ -83,7 +83,7 @@ func (uh *UserHandler) CreateUsers(ctx *gin.Context) {
 		return
 	}
 
-	user := input.MapInputToModel()
+	user := input.MapCreateInputToModel()
 
 	createdUser, err := uh.service.CreateUsers(user)
 	if err != nil {

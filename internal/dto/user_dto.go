@@ -30,7 +30,7 @@ type UpdateUserInput struct {
 	Level    int    `json:"level" binding:"omitempty,oneof=1 2"`
 }
 
-func (input *CreateUserInput) MapInputToModel() models.User {
+func (input *CreateUserInput) MapCreateInputToModel() models.User {
 	return models.User{
 		Name:     input.Name,
 		Email:    input.Email,
