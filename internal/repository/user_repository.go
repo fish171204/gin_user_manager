@@ -59,6 +59,6 @@ func (ur *InMemoryUserRepository) Update(uuid string, user models.User) error {
 }
 
 // DELETE
-func (ur *InMemoryUserRepository) Delete() {
+func (ur *InMemoryUserRepository) Delete(uuid string) error {
 
 }
