@@ -30,6 +30,7 @@ type UpdateUserInput struct {
 	Level    int    `json:"level" binding:"omitempty,oneof=1 2"`
 }
 
+// Request
 func (input *CreateUserInput) MapCreateInputToModel() models.User {
 	return models.User{
 		Name:     input.Name,
@@ -52,6 +53,7 @@ func (input *UpdateUserInput) MapUpdateInputToModel() models.User {
 	}
 }
 
+// Response
 func MapUserToDTO(user models.User) *UserDTO {
 	return &UserDTO{
 		UUID:   user.UUID,
