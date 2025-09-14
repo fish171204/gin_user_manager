@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"slices"
 	"user-management-api/internal/models"
 )
 
@@ -60,5 +61,9 @@ func (ur *InMemoryUserRepository) Update(uuid string, user models.User) error {
 
 // DELETE
 func (ur *InMemoryUserRepository) Delete(uuid string) error {
-
+	for i, u := range ur.users {
+		if u.UUID == uuid {
+			ur.users[i] = slices.Delete(users, i, i+1)
+		}
+	}
 }
