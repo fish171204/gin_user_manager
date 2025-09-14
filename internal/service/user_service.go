@@ -70,7 +70,7 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 	user.Email = utils.NormalizeString(user.Email)
 
 	if _, exists := us.repo.FindByEmail(user.Email); exists {
-		return models.User{}, utils.NewError("email already exitst", utils.ErrCodeConflict)
+		return models.User{}, utils.NewError("email already exists", utils.ErrCodeConflict)
 	}
 
 	user.UUID = uuid.New().String()
@@ -92,29 +92,34 @@ func (us *userService) CreateUsers(user models.User) (models.User, error) {
 
 // PUT
 func (us *userService) UpdateUser(uuid string, updatedUser models.User) (models.User, error) {
-	updatedUser.Email = utils.NormalizeString(updatedUser.Email)
-
-	if u, exists := us.repo.FindByEmail(updatedUser.Email); exists && u.UUID != uuid {
-		return models.User{}, utils.NewError("email already exists", utils.ErrCodeConflict)
-	}
-
 	currentUser, found := us.repo.FindByUUID(uuid)
 	if !found {
 		return models.User{}, utils.NewError("user not found", utils.ErrCodeNotFound)
 	}
 
-	currentUser.Name = updatedUser.Name
-	currentUser.Email = updatedUser.Email
-	currentUser.Age = updatedUser.Age
-	currentUser.Status = updatedUser.Status
-	currentUser.Level = updatedUser.Level
+	// Update fields conditionally
+	utils.UpdateStringField(&currentUser.Name, updatedUser.Name)
+	utils.UpdateIntField(&currentUser.Age, updatedUser.Age)
+	utils.UpdateIntField(&currentUser.Status, updatedUser.Status)
+	utils.UpdateIntField(&currentUser.Level, updatedUser.Level)
 
+	// Handle email with conflict check
+	if updatedUser.Email != "" {
+		normalizedEmail := utils.NormalizeString(updatedUser.Email)
+		if normalizedEmail != currentUser.Email {
+			if u, exists := us.repo.FindByEmail(normalizedEmail); exists && u.UUID != uuid {
+				return models.User{}, utils.NewError("email already exists", utils.ErrCodeConflict)
+			}
+		}
+		currentUser.Email = normalizedEmail
+	}
+
+	// Handle password with hashing
 	if updatedUser.Password != "" {
 		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(updatedUser.Password), bcrypt.DefaultCost)
 		if err != nil {
 			return models.User{}, utils.WrapError("failed to hash password", utils.ErrCodeInternal, err)
 		}
-
 		currentUser.Password = string(hashedPassword)
 	}
 
