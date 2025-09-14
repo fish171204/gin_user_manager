@@ -77,11 +77,13 @@ func (uh *UserHandler) GetUserByUUID(ctx *gin.Context) {
 
 // POST
 func (uh *UserHandler) CreateUsers(ctx *gin.Context) {
-	var user models.User
-	if err := ctx.ShouldBindJSON(&user); err != nil {
+	var input dto.CreateUserInput
+	if err := ctx.ShouldBindJSON(&input); err != nil {
 		utils.ResponseValidator(ctx, validation.HandleValidationErrors(err))
 		return
 	}
+
+	user := input.MapInputToModel()
 
 	createdUser, err := uh.service.CreateUsers(user)
 	if err != nil {
