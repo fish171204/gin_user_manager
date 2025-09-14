@@ -63,7 +63,9 @@ func (ur *InMemoryUserRepository) Update(uuid string, user models.User) error {
 func (ur *InMemoryUserRepository) Delete(uuid string) error {
 	for i, u := range ur.users {
 		if u.UUID == uuid {
-			ur.users[i] = slices.Delete(users, i, i+1)
+			ur.users = slices.Delete(ur.users, i, i+1)
+			return nil
 		}
 	}
+	return fmt.Errorf("user not found")
 }
