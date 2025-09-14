@@ -7,5 +7,5 @@ type UserService interface {
 	CreateUsers(user models.User) (models.User, error)
 	GetUserByUUID(uuid string) (models.User, error)
 	UpdateUser(uuid string, user models.User) (models.User, error)
-	DeleteUser()
+	DeleteUser(uuid string) error
 }

@@ -130,6 +130,6 @@ func (us *userService) UpdateUser(uuid string, updatedUser models.User) (models.
 	return currentUser, nil
 }
 
-func (us *userService) DeleteUser() {
-
+func (us *userService) DeleteUser(uuid string) error {
+	us.repo.Delete(uuid)
 }
