@@ -135,4 +135,5 @@ func (uh *UserHandler) DeleteUser(ctx *gin.Context) {
 		return
 	}
 
+	utils.ResponseStatusCode(ctx, http.StatusNoContent)
 }
